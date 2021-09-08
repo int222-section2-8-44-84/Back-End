@@ -47,7 +47,7 @@ public class Posts {
 	private int categories_CategoryId;
 	
 	@OneToMany(mappedBy = "Posts_PostNumber", cascade = CascadeType.ALL, orphanRemoval = true)
-	Set<Posts_has_Tags> posts_Number ;
+	Set<PostsHasTags> posts_Number ;
 	
 	@ManyToOne
     @JoinColumn(name = "UserNumber", insertable = false, updatable = false)

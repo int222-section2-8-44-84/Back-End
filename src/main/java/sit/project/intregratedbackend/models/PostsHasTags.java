@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Posts_has_Tags")
-public class Posts_has_Tags {
+public class PostsHasTags {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
