@@ -38,7 +38,7 @@ public class Posts {
 	private int reviewRate;
 	
 	@Column(name = "PostTime")
-	private Date postTime;
+	private java.sql.Date postTime;
 	
 	@Column(name = "Accounts_UserNumber")
 	private int accounts_UserNumber;
@@ -115,11 +115,12 @@ public class Posts {
 		this.reviewRate = reviewRate;
 	}
 
-	public Date getPostTime() {
+	public java.sql.Date getPostTime(){
 		return postTime;
+		
 	}
-
-	public void setPostTime(Date postTime) {
+	
+	public void setPostTime(java.sql.Date postTime) {
 		this.postTime = postTime;
 	}
 
