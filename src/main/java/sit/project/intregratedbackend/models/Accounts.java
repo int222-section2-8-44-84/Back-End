@@ -28,10 +28,10 @@ public class Accounts {
 	@Column(name = "Email")
 	private String email;
 	
-	@Column(name = "Role")
-	private String role;
+//	@Column(name = "Role")
+//	private String role;
 	
-	@OneToMany(mappedBy = "Accounts_UserNumber", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "UserNumber", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts> posts;
 
 	public int getUserNumber() {
@@ -66,12 +66,12 @@ public class Accounts {
 		this.email = email;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
+//	public String getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(String role) {
+//		this.role = role;
+//	}
 	
 }

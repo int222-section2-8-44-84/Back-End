@@ -11,18 +11,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Posts_has_Tags")
-public class PostsHasTags {
+public class PostTag {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PostTagNumber")
 	private int postTagNumber;
 	
-	@Column(name = "Posts_PostNumber")
-	private int posts_PostNumber;
+	@Column(name = "PostNumber")
+	private int postsNumber;
 	
-	@Column(name = "Tags_TagID")
-	private int tags_TagId;
+	@Column(name = "TagID")
+	private int tagId;
 	
 	@ManyToOne
     @JoinColumn(name = "TagID", insertable = false, updatable = false)

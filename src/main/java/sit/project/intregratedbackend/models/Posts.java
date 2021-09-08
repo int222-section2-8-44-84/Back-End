@@ -1,6 +1,5 @@
 package sit.project.intregratedbackend.models;
 
-import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,17 +21,17 @@ public class Posts {
 	@Column(name = "PostTiltle")
 	private String postTitle;
 	
-	@Column(name = "Food")
-	private String food;
+	@Column(name = "FoodName")
+	private String foodName;
 	
-	@Column(name = "Restaurant")
-	private String restaurant;
+	@Column(name = "RestaurantName")
+	private String restaurantName;
 	
 	@Column(name = "FoodPrice")
 	private double foodPrice;
 	
-	@Column(name = "Description")
-	private String description;
+	@Column(name = "PostDescription")
+	private String postdescription;
 	
 	@Column(name = "ReviewRate")
 	private int reviewRate;
@@ -40,14 +39,14 @@ public class Posts {
 	@Column(name = "PostTime")
 	private java.sql.Date postTime;
 	
-	@Column(name = "Accounts_UserNumber")
-	private int accounts_UserNumber;
+	@Column(name = "CategoryID")
+	private int categoryId;
 	
-	@Column(name = "Categories_CategoryID")
-	private int categories_CategoryId;
+	@Column(name = "UserNumber")
+	private int userNumber;
 	
-	@OneToMany(mappedBy = "Posts_PostNumber", cascade = CascadeType.ALL, orphanRemoval = true)
-	Set<PostsHasTags> posts_Number ;
+	@OneToMany(mappedBy = "PostNumber", cascade = CascadeType.ALL, orphanRemoval = true)
+	Set<PostTag> postsNumber ;
 	
 	@ManyToOne
     @JoinColumn(name = "UserNumber", insertable = false, updatable = false)
@@ -56,8 +55,6 @@ public class Posts {
 	@ManyToOne
 	@JoinColumn(name = "CategoryID", insertable = false, updatable = false)
 	Categories categoriesId;
-	
-	
 
 	public int getPostNumber() {
 		return postNumber;
@@ -75,20 +72,20 @@ public class Posts {
 		this.postTitle = postTitle;
 	}
 
-	public String getFood() {
-		return food;
+	public String getFoodName() {
+		return foodName;
 	}
 
-	public void setFood(String food) {
-		this.food = food;
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
 	}
 
-	public String getRestaurant() {
-		return restaurant;
+	public String getRestaurantName() {
+		return restaurantName;
 	}
 
-	public void setRestaurant(String restaurant) {
-		this.restaurant = restaurant;
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
 	}
 
 	public double getFoodPrice() {
@@ -99,12 +96,12 @@ public class Posts {
 		this.foodPrice = foodPrice;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getPostdescription() {
+		return postdescription;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setPostdescription(String postdescription) {
+		this.postdescription = postdescription;
 	}
 
 	public int getReviewRate() {
@@ -115,30 +112,27 @@ public class Posts {
 		this.reviewRate = reviewRate;
 	}
 
-	public java.sql.Date getPostTime(){
+	public java.sql.Date getPostTime() {
 		return postTime;
-		
 	}
-	
+
 	public void setPostTime(java.sql.Date postTime) {
 		this.postTime = postTime;
 	}
 
-	public int getAccounts_UserNumber() {
-		return accounts_UserNumber;
+	public int getCategoryId() {
+		return categoryId;
 	}
 
-	public void setAccounts_UserNumber(int accounts_UserNumber) {
-		this.accounts_UserNumber = accounts_UserNumber;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
-	public int getCategories_CategoryId() {
-		return categories_CategoryId;
+	public int getUserNumber() {
+		return userNumber;
 	}
 
-	public void setCategories_CategoryId(int categories_CategoryId) {
-		this.categories_CategoryId = categories_CategoryId;
+	public void setUserNumber(int userNumber) {
+		this.userNumber = userNumber;
 	}
-	
-	
 }

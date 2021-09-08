@@ -16,13 +16,14 @@ import javax.persistence.Table;
 public class Categories {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "CategoryID")
 	private int categoryId;
 	
-	@Column(name = "Category")
-	private String category;
+	@Column(name = "CategoryName")
+	private String categoryName;
 	
-	@OneToMany(mappedBy = "Categories_CategoryID", cascade = CascadeType.ALL, orphanRemoval = true)
-	Set<Posts> posts_Categories ;
+	@OneToMany(mappedBy = "CategoryID", cascade = CascadeType.ALL, orphanRemoval = true)
+	Set<Posts> postsCategory ;
 
 	public int getCategoryId() {
 		return categoryId;
@@ -32,11 +33,13 @@ public class Categories {
 		this.categoryId = categoryId;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getCategoryName() {
+		return categoryName;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
+
+
 }
