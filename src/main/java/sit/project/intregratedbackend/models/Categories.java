@@ -19,8 +19,8 @@ public class Categories {
 	@Column(name = "CategoryID")
 	private int categoryId;
 	
-	@Column(name = "CategoryName")
-	private String categoryName;
+	@Column(name = "Category")
+	private String category;
 	
 	@OneToMany(mappedBy = "CategoryID", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts> postsCategory ;
@@ -33,13 +33,12 @@ public class Categories {
 		this.categoryId = categoryId;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setCategory(String category) {
+		this.category = category;
 	}
-
 
 }

@@ -18,26 +18,29 @@ public class Posts {
 	@Column(name = "PostNumber")
 	private int postNumber;
 	
-	@Column(name = "PostTiltle")
+	@Column(name = "PostTitle")
 	private String postTitle;
 	
-	@Column(name = "FoodName")
-	private String foodName;
+	@Column(name = "Food")
+	private String food;
 	
-	@Column(name = "RestaurantName")
-	private String restaurantName;
+	@Column(name = "Restaurant")
+	private String restaurant;
 	
 	@Column(name = "FoodPrice")
 	private double foodPrice;
 	
-	@Column(name = "PostDescription")
-	private String postdescription;
+	@Column(name = "Description")
+	private String description;
 	
 	@Column(name = "ReviewRate")
 	private int reviewRate;
 	
 	@Column(name = "PostTime")
 	private java.sql.Date postTime;
+	
+	@Column(name = "ImageName")
+	private String imageName;
 	
 	@Column(name = "CategoryID")
 	private int categoryId;
@@ -46,7 +49,7 @@ public class Posts {
 	private int userNumber;
 	
 	@OneToMany(mappedBy = "PostNumber", cascade = CascadeType.ALL, orphanRemoval = true)
-	Set<PostTag> postsNumber ;
+	Set<Posts_has_Tags> postTags ;
 	
 	@ManyToOne
     @JoinColumn(name = "UserNumber", insertable = false, updatable = false)
@@ -72,20 +75,20 @@ public class Posts {
 		this.postTitle = postTitle;
 	}
 
-	public String getFoodName() {
-		return foodName;
+	public String getFood() {
+		return food;
 	}
 
-	public void setFoodName(String foodName) {
-		this.foodName = foodName;
+	public void setFood(String food) {
+		this.food = food;
 	}
 
-	public String getRestaurantName() {
-		return restaurantName;
+	public String getRestaurant() {
+		return restaurant;
 	}
 
-	public void setRestaurantName(String restaurantName) {
-		this.restaurantName = restaurantName;
+	public void setRestaurant(String restaurant) {
+		this.restaurant = restaurant;
 	}
 
 	public double getFoodPrice() {
@@ -96,12 +99,12 @@ public class Posts {
 		this.foodPrice = foodPrice;
 	}
 
-	public String getPostdescription() {
-		return postdescription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setPostdescription(String postdescription) {
-		this.postdescription = postdescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public int getReviewRate() {
@@ -118,6 +121,14 @@ public class Posts {
 
 	public void setPostTime(java.sql.Date postTime) {
 		this.postTime = postTime;
+	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 
 	public int getCategoryId() {

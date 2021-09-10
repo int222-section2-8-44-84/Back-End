@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Posts_has_Tags")
-public class PostTag {
+public class Posts_has_Tags {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +31,29 @@ public class PostTag {
 	@ManyToOne
 	@JoinColumn(name = "PostNumber", insertable = false, updatable = false)
 	Posts postNumber;
-	
-	
+
+	public int getPostTagNumber() {
+		return postTagNumber;
+	}
+
+	public void setPostTagNumber(int postTagNumber) {
+		this.postTagNumber = postTagNumber;
+	}
+
+	public int getPostsNumber() {
+		return postsNumber;
+	}
+
+	public void setPostsNumber(int postsNumber) {
+		this.postsNumber = postsNumber;
+	}
+
+	public int getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(int tagId) {
+		this.tagId = tagId;
+	}
 
 }

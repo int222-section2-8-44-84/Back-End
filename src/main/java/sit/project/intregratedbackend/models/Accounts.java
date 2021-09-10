@@ -16,10 +16,10 @@ import javax.persistence.Table;
 public class Accounts {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "userNumber")
+	@Column(name = "UserNumber")
 	private int userNumber;
 	
-	@Column(name = "userID")
+	@Column(name = "UserID")
 	private String userId;
 	
 	@Column(name = "Password")
@@ -28,8 +28,8 @@ public class Accounts {
 	@Column(name = "Email")
 	private String email;
 	
-//	@Column(name = "Role")
-//	private String role;
+	@Column(name = "Role")
+	private String role;
 	
 	@OneToMany(mappedBy = "UserNumber", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts> posts;
@@ -66,12 +66,13 @@ public class Accounts {
 		this.email = email;
 	}
 
-//	public String getRole() {
-//		return role;
-//	}
-//
-//	public void setRole(String role) {
-//		this.role = role;
-//	}
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	
 }
