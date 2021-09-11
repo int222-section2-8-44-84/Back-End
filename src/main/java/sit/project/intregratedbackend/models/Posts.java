@@ -42,13 +42,13 @@ public class Posts {
 	@Column(name = "ImageName")
 	private String imageName;
 	
-	@Column(name = "CategoryID")
-	private int categoryId;
-	
 	@Column(name = "UserNumber")
 	private int userNumber;
 	
-	@OneToMany(mappedBy = "PostNumber", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Column(name = "CategoryID")
+	private int categoryId;
+	
+	@OneToMany(mappedBy = "Posts", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts_has_Tags> postTags ;
 	
 	@ManyToOne
@@ -131,6 +131,14 @@ public class Posts {
 		this.imageName = imageName;
 	}
 
+	public int getUserNumber() {
+		return userNumber;
+	}
+
+	public void setUserNumber(int userNumber) {
+		this.userNumber = userNumber;
+	}
+
 	public int getCategoryId() {
 		return categoryId;
 	}
@@ -139,11 +147,5 @@ public class Posts {
 		this.categoryId = categoryId;
 	}
 
-	public int getUserNumber() {
-		return userNumber;
-	}
 
-	public void setUserNumber(int userNumber) {
-		this.userNumber = userNumber;
-	}
 }

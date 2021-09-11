@@ -22,7 +22,7 @@ public class Categories {
 	@Column(name = "Category")
 	private String category;
 	
-	@OneToMany(mappedBy = "CategoryID", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "Categories", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts> postsCategory ;
 
 	public int getCategoryId() {

@@ -31,7 +31,7 @@ public class Accounts {
 	@Column(name = "Role")
 	private String role;
 	
-	@OneToMany(mappedBy = "UserNumber", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "Accounts", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts> posts;
 
 	public int getUserNumber() {
@@ -74,5 +74,5 @@ public class Accounts {
 		this.role = role;
 	}
 
-	
+
 }

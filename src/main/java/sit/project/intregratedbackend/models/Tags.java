@@ -22,7 +22,7 @@ public class Tags {
 	@Column(name = "TagName")
 	private String tagName;
 	
-	@OneToMany(mappedBy = "TagID", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "Tags", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts_has_Tags> postsTag;
 
 	public int getTagId() {
