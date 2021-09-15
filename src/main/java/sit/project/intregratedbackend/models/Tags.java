@@ -19,10 +19,10 @@ public class Tags {
 	@Column(name = "TagID")
 	private int tagId;
 	
-	@Column(name = "TagName")
-	private String tagName;
+	@Column(name = "Tag")
+	private String tag;
 	
-	@OneToMany(mappedBy = "Tags", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "tags", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts_has_Tags> postsTag;
 
 	public int getTagId() {
@@ -33,12 +33,14 @@ public class Tags {
 		this.tagId = tagId;
 	}
 
-	public String getTagName() {
-		return tagName;
+	public String getTag() {
+		return tag;
 	}
 
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
+
+
 
 }

@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,7 @@ import javax.persistence.Table;
 @Table(name = "Posts")
 public class Posts {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PostNumber")
 	private int postNumber;
 	
@@ -28,7 +31,7 @@ public class Posts {
 	private String restaurant;
 	
 	@Column(name = "FoodPrice")
-	private double foodPrice;
+	private float foodPrice;
 	
 	@Column(name = "Description")
 	private String description;
@@ -48,16 +51,16 @@ public class Posts {
 	@Column(name = "CategoryID")
 	private int categoryId;
 	
-	@OneToMany(mappedBy = "Posts", cascade = CascadeType.ALL, orphanRemoval = true)
-	Set<Posts_has_Tags> postTags ;
+	@OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, orphanRemoval = true)
+	Set<Posts_has_Tags> postTags;
 	
 	@ManyToOne
     @JoinColumn(name = "UserNumber", insertable = false, updatable = false)
-    Accounts accountNumber;
+    Accounts account;
 	
 	@ManyToOne
 	@JoinColumn(name = "CategoryID", insertable = false, updatable = false)
-	Categories categoriesId;
+	Categories categories;
 
 	public int getPostNumber() {
 		return postNumber;
@@ -95,7 +98,7 @@ public class Posts {
 		return foodPrice;
 	}
 
-	public void setFoodPrice(double foodPrice) {
+	public void setFoodPrice(float foodPrice) {
 		this.foodPrice = foodPrice;
 	}
 

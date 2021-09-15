@@ -30,7 +30,7 @@ public class Posts_has_Tags {
 	
 	@ManyToOne
 	@JoinColumn(name = "PostNumber", insertable = false, updatable = false)
-	Posts postNumber;
+	Posts posts;
 
 	public int getPostTagNumber() {
 		return postTagNumber;
