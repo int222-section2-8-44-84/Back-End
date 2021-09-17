@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sit.project.intregratedbackend.models.Categories;
-import sit.project.intregratedbackend.repositories.CategoriesRepository;
+import sit.project.intregratedbackend.models.Tags;
+import sit.project.intregratedbackend.repositories.TagsRepository;
 
 @CrossOrigin
 @RestController
-public class CategoriesRestController {
+public class TagsRestController {
 	@Autowired
-	CategoriesRepository categoriesRepo;
+	TagsRepository tagsRepo;
 	
-	@GetMapping("/showAllCategories")
-	public List<Categories> allCategories(){
-		return categoriesRepo.findAll();
+	@GetMapping("/showAllTags")
+	public List<Tags> allTags(){
+		return tagsRepo.findAll();
 	}
 }
