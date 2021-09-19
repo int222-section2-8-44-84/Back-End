@@ -19,13 +19,12 @@ import javax.annotation.PostConstruct;
 public class FileSystemStorageService implements StorageService  {
     final Path rootLocation;
     
-    //@Autowired
-    
-//    public FileSystemStorageService(StorageProperties properties) {
-    public FileSystemStorageService() {
+    @Autowired
+    public FileSystemStorageService(StorageProperties properties) {
+    //public FileSystemStorageService() {
     	//System.out.print(properties.toString());
-        this.rootLocation = Paths.get("/public/productImages");
-        //this.rootLocation = Paths.get(properties.getLocation());
+//        this.rootLocation = Paths.get("./public/productImages");
+        this.rootLocation = Paths.get(properties.getLocation());
     }
 
     @Override

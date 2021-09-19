@@ -33,7 +33,7 @@ public class PostsRestController {
     }
     
     //Delete
-    @DeleteMapping("/posts/{postNumber}")
+    @DeleteMapping("/DeletePost/{postNumber}")
     public String deletePost(@PathVariable Integer postNumber) throws IOException {
 //    	postsRepo.findById(postNumber).orElse(null);
     	postsRepo.deleteById(postNumber);
