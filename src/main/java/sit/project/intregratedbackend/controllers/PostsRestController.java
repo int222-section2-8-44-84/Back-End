@@ -47,7 +47,9 @@ public class PostsRestController {
     }
     
     @PutMapping("/editPost/{postNumber}")
-    public Posts editPost(@RequestBody Posts editingPost) {
-		return postsRepo.save(editingPost);
+    public Posts editPost(@RequestBody Posts editingPost,@PathVariable int postNumber){
+    	Posts oldPost = postsRepo.findById(postNumber).orElse(null);
+    	oldPost.setAll(editingPost);
+		return postsRepo.save(oldPost);
     }
 }

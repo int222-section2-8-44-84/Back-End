@@ -13,11 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "Posts")
 public class Posts {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO,generator="native")
+	@GenericGenerator(name = "native",strategy = "native")
 	@Column(name = "PostNumber")
 	private int postNumber;
 	
@@ -40,7 +43,7 @@ public class Posts {
 	private int reviewRate;
 	
 	@Column(name = "PostTime")
-	private java.sql.Date postTime;
+	private java.sql.Timestamp postTime;
 	
 	@Column(name = "ImageName")
 	private String imageName;
@@ -118,11 +121,11 @@ public class Posts {
 		this.reviewRate = reviewRate;
 	}
 
-	public java.sql.Date getPostTime() {
+	public java.sql.Timestamp getPostTime() {
 		return postTime;
 	}
 
-	public void setPostTime(java.sql.Date postTime) {
+	public void setPostTime(java.sql.Timestamp postTime) {
 		this.postTime = postTime;
 	}
 
@@ -148,6 +151,19 @@ public class Posts {
 
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
+	}
+	
+	public void setAll(Posts post) {
+		this.setPostTitle(post.postTitle);
+		this.setFood(post.food);
+		this.setRestaurant(post.restaurant);
+		this.setFoodPrice(post.foodPrice);
+		this.setDescription(post.description);
+		this.setReviewRate(post.reviewRate);
+		this.setPostTime(post.postTime);
+		this.setImageName(post.imageName);
+		this.setUserNumber(post.userNumber);
+		this.setCategoryId(post.categoryId);
 	}
 
 
