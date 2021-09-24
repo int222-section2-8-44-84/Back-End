@@ -1,6 +1,11 @@
 package sit.project.intregratedbackend.controllers;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -16,6 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import sit.project.intregratedbackend.models.Posts;
+import sit.project.intregratedbackend.models.Posts_has_Tags;
+import sit.project.intregratedbackend.models.Tags;
 import sit.project.intregratedbackend.repositories.PostsRepository;
 import sit.project.intregratedbackend.repositories.Posts_has_TagsRepository;
 import sit.project.intregratedbackend.uploadfiles.StorageFileNotFoundException;
@@ -26,8 +37,8 @@ import sit.project.intregratedbackend.uploadfiles.StorageService;
 public class FileRestController {
 	@Autowired
     PostsRepository postsJpaRepository;
-    //@Autowired
-    //Posts_has_TagsRepository posts_has_TagsJpaRepository;
+    @Autowired
+    Posts_has_TagsRepository posts_has_TagsJpaRepository;
     
     final StorageService storageService;
     
@@ -56,13 +67,7 @@ public class FileRestController {
     @PutMapping("/updateimage/{postNumber}")
     public String handleFileUpdate(@PathVariable int postNumber,@RequestParam("file") MultipartFile file) throws IOException {
     	String oldImage = postsJpaRepository.findById(postNumber).get().getImageName();
-//    	storageService.delete(oldImage);
     	deleteFile(oldImage);
-//    	for (int i = 0; i < productsJpaRepository.count(); i++) {
-//			if(file.getOriginalFilename().equals(productsJpaRepository.findAll().get(i).getProductimage())) {
-//				
-//			}
-//		}
         handleFileUpload(file);
         return "Update complete: Change to "+file.getOriginalFilename();
     }
@@ -72,16 +77,21 @@ public class FileRestController {
         return ResponseEntity.notFound().build();
     }
     
-//    public String randomString() {
-//    	String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-//        StringBuilder salt = new StringBuilder();
-//        Random rnd = new Random();
-//        int size = 17;
-//        while (salt.length() < size) { 
-//            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-//            salt.append(SALTCHARS.charAt(index));
-//        }
-//        String saltStr = salt.toString();
-//        return saltStr;
-//    }
+    @PostMapping("/createPostWithImage")
+    public String createPost(@RequestParam("post") String newPost, @RequestParam("tags") String newTags, @RequestParam("file") MultipartFile file) {
+    	Posts post = new Gson().fromJson(newPost, Posts.class);
+    	postsJpaRepository.save(post);
+    	
+    	Type tagsType = new TypeToken<ArrayList<Tags>>(){}.getType();
+    	ArrayList<Tags> tags = new Gson().fromJson(newTags, tagsType );
+    	
+    	for (Tags tag : tags) { 
+    		Posts_has_Tags postTag = new Posts_has_Tags(); 
+    		postTag.setPostsNumber(post.getPostNumber());
+    		postTag.setTagId(tag.getTagId());
+    		posts_has_TagsJpaRepository.save(postTag);
+    	}
+    	handleFileUpload(file);
+    	return "Complete";
+    }
 }

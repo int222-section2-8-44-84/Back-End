@@ -9,12 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "Posts_has_Tags")
 public class Posts_has_Tags {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO,generator="native")
+	@GenericGenerator(name = "native",strategy = "native")
 	@Column(name = "PostTagNumber")
 	private int postTagNumber;
 	
@@ -55,5 +58,6 @@ public class Posts_has_Tags {
 	public void setTagId(int tagId) {
 		this.tagId = tagId;
 	}
+
 
 }
