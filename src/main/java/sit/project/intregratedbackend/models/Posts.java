@@ -153,6 +153,15 @@ public class Posts {
 		this.categoryId = categoryId;
 	}
 	
+	
+	public Set<Posts_has_Tags> getPostTags() {
+		return postTags;
+	}
+
+	public void setPostTags(Set<Posts_has_Tags> postTags) {
+		this.postTags = postTags;
+	}
+
 	public void setAll(Posts post) {
 		this.setPostTitle(post.postTitle);
 		this.setFood(post.food);
