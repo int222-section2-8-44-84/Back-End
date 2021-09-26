@@ -162,6 +162,10 @@ public class Posts {
 		this.postTags = postTags;
 	}
 
+	public Categories getCategories() {
+		return categories;
+	}
+
 	public void setAll(Posts post) {
 		this.setPostTitle(post.postTitle);
 		this.setFood(post.food);

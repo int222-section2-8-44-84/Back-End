@@ -59,5 +59,9 @@ public class Posts_has_Tags {
 		this.tagId = tagId;
 	}
 
+	public Tags getTags() {
+		return tags;
+	}
+
 
 }
