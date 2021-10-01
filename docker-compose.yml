@@ -5,7 +5,7 @@ services:
         build: .
         image: backend
         volumes:
-            - /home/nippit/Back-End/public:/tmp
+            - /home/wongnokproject/Back-End/public:/tmp
         ports:
             - "3000:3000"
         restart: always
