@@ -2,9 +2,12 @@ package sit.project.intregratedbackend.controllers;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -60,11 +63,11 @@ public class FileRestController {
 
     @PostMapping("/uploadimage")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-        storageService.store(file);
-        	return file.getOriginalFilename()+" Uplode complete";
+    		storageService.store(file); 
+        return file.getOriginalFilename()+" Uplode complete";
     }
-    
-    @PutMapping("/updateimage/{postNumber}")
+
+	@PutMapping("/updateimage/{postNumber}")
     public String handleFileUpdate(@PathVariable int postNumber,@RequestParam("file") MultipartFile file) throws IOException {
     	String oldImage = postsJpaRepository.findById(postNumber).get().getImageName();
     	deleteFile(oldImage);
@@ -94,4 +97,14 @@ public class FileRestController {
     	handleFileUpload(file);
     	return "Complete";
     }
+    
+    @DeleteMapping("/deletePost/{postNumber}")
+    public String deletePost(@PathVariable int postNumber) throws IOException {
+    	Posts post = postsJpaRepository.findById(postNumber).orElse(null);
+    	Set <Posts_has_Tags> tags = post.getPostTags();
+    	posts_has_TagsJpaRepository.deleteAll(tags);
+    	storageService.delete(post.getImageName());
+    	postsJpaRepository.deleteById(postNumber);
+       return "Delete Post Number: "+postNumber+" complete." ;
+   }
 }
