@@ -3,7 +3,7 @@ services:
     backend:
         container_name: backend
         build: .
-        image: ghcr.io/Chicky0/int222-backend:latest
+        image: ghcr.io/chicky0/int222-backend:latest
         volumes:
             - /home/wongnokproject/Back-End/public:/tmp
         ports:
