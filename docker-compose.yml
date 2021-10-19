@@ -1,11 +1,15 @@
-version: '2.2'
+version: '2.3'
 services:
     backend:
         container_name: backend
         build: .
-        image: backend
+        image: ghcr.io/Chicky0/int222-backend:latest
         volumes:
             - /home/wongnokproject/Back-End/public:/tmp
         ports:
             - "3000:3000"
         restart: always
+networks:
+  default:
+    external:
+      name: wongnokproject
