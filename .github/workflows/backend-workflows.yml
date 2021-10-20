@@ -19,7 +19,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/Chicky0/int222-backend:latest
+          tags: ghcr.io/chicky0/int222-backend:latest
   deploy:
     needs: build
     runs-on: ubuntu-20.04
