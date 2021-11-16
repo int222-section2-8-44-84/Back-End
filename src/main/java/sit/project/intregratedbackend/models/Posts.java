@@ -19,48 +19,48 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "Posts")
 public class Posts {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO,generator="native")
-	@GenericGenerator(name = "native",strategy = "native")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
 	@Column(name = "PostNumber")
 	private int postNumber;
-	
+
 	@Column(name = "PostTitle")
 	private String postTitle;
-	
+
 	@Column(name = "Food")
 	private String food;
-	
+
 	@Column(name = "Restaurant")
 	private String restaurant;
-	
+
 	@Column(name = "FoodPrice")
 	private float foodPrice;
-	
+
 	@Column(name = "Description")
 	private String description;
-	
+
 	@Column(name = "ReviewRate")
 	private int reviewRate;
-	
+
 	@Column(name = "PostTime")
 	private java.sql.Timestamp postTime;
-	
+
 	@Column(name = "ImageName")
 	private String imageName;
-	
+
 	@Column(name = "UserNumber")
 	private int userNumber;
-	
+
 	@Column(name = "CategoryID")
 	private int categoryId;
-	
+
 	@OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts_has_Tags> postTags;
-	
+
 	@ManyToOne
-    @JoinColumn(name = "UserNumber", insertable = false, updatable = false)
-    Accounts account;
-	
+	@JoinColumn(name = "UserNumber", insertable = false, updatable = false)
+	AuthenticationUser account;
+
 	@ManyToOne
 	@JoinColumn(name = "CategoryID", insertable = false, updatable = false)
 	Categories categories;
@@ -152,8 +152,11 @@ public class Posts {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
-	
-	
+
+	public void setCategories(Categories categories) {
+		this.categories = categories;
+	}
+
 	public Set<Posts_has_Tags> getPostTags() {
 		return postTags;
 	}
@@ -178,6 +181,5 @@ public class Posts {
 		this.setUserNumber(post.userNumber);
 		this.setCategoryId(post.categoryId);
 	}
-
 
 }
