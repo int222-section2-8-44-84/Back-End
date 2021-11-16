@@ -46,6 +46,9 @@ public class AuthenticationUser extends User implements Serializable {
 	@Column(name = "Email")
 	private String email;
 	
+	@Column(name = "RoleID")
+	private String roleID;
+	
 	@OneToMany(mappedBy = "account")
 	Set<Posts> Posts;
 	
