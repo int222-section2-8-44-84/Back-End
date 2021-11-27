@@ -1,31 +1,31 @@
 package sit.project.intregratedbackend.controllers;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Set;
+//import java.io.IOException;
+//import java.lang.reflect.Type;
+//import java.util.ArrayList;
+//import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+//import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.PutMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import sit.project.intregratedbackend.models.Posts;
-import sit.project.intregratedbackend.models.Posts_has_Tags;
-import sit.project.intregratedbackend.models.Tags;
+//import com.google.gson.Gson;
+//import com.google.gson.reflect.TypeToken;
+//
+//import sit.project.intregratedbackend.models.Posts;
+//import sit.project.intregratedbackend.models.Posts_has_Tags;
+//import sit.project.intregratedbackend.models.Tags;
 import sit.project.intregratedbackend.repositories.PostsRepository;
 import sit.project.intregratedbackend.repositories.Posts_has_TagsRepository;
 import sit.project.intregratedbackend.uploadfiles.StorageFileNotFoundException;
@@ -51,25 +51,25 @@ public class FileRestController {
         return storageService.loadAsResource(filename);
     }
 
-    @DeleteMapping(value = "/deletefile/{filename:.+}", produces = MediaType.IMAGE_JPEG_VALUE )
-     public String deleteFile(@PathVariable String filename) throws IOException {
-        storageService.delete(filename);
-        return "Delete Image: "+filename+" complete." ;
-    }
-
-    @PostMapping("/uploadimage")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-    		storageService.store(file); 
-        return file.getOriginalFilename()+" Uplode complete";
-    }
-
-	@PutMapping("/updateimage/{postNumber}")
-    public String handleFileUpdate(@PathVariable int postNumber,@RequestParam("file") MultipartFile file) throws IOException {
-    	String oldImage = postsJpaRepository.findById(postNumber).get().getImageName();
-    	deleteFile(oldImage);
-        handleFileUpload(file);
-        return "Update complete: Change to "+file.getOriginalFilename();
-    }
+//    @DeleteMapping(value = "/deletefile/{filename:.+}", produces = MediaType.IMAGE_JPEG_VALUE )
+//     public String deleteFile(@PathVariable String filename) throws IOException {
+//        storageService.delete(filename);
+//        return "Delete Image: "+filename+" complete." ;
+//    }
+//
+//    @PostMapping("/uploadimage")
+//    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
+//    		storageService.store(file); 
+//        return file.getOriginalFilename()+" Uplode complete";
+//    }
+//
+//	@PutMapping("/updateimage/{postNumber}")
+//    public String handleFileUpdate(@PathVariable int postNumber,@RequestParam("file") MultipartFile file) throws IOException {
+//    	String oldImage = postsJpaRepository.findById(postNumber).get().getImageName();
+//    	deleteFile(oldImage);
+//        handleFileUpload(file);
+//        return "Update complete: Change to "+file.getOriginalFilename();
+//    }
     
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {

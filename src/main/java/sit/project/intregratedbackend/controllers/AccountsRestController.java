@@ -16,6 +16,7 @@ import sit.project.intregratedbackend.models.Posts;
 import sit.project.intregratedbackend.models.Roles;
 import sit.project.intregratedbackend.repositories.AccountsRepository;
 import sit.project.intregratedbackend.repositories.RolesRepository;
+import sit.project.intregratedbackend.services.ServiceUtil;
 
 @CrossOrigin
 @RestController
@@ -66,6 +67,12 @@ public class AccountsRestController {
 		}
 	}
 	
+	@GetMapping("/me")
+	public AuthenticationUser getMe() {
+		String username = ServiceUtil.getUsername();
+		return accountRepo.findByuserID(username).get();
+	}
+	
 	public boolean checkUserID(String userID) {
 		try {
 			if(accountRepo.findByuserID(userID).get().getUsername().equalsIgnoreCase(userID)) {
@@ -89,4 +96,6 @@ public class AccountsRestController {
 			return false;
 		}
 	}
+	
+	
 }
