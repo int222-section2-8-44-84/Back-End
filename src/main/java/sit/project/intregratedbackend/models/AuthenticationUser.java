@@ -33,7 +33,7 @@ public class AuthenticationUser extends User implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "AccountNumber")
 	private int accountNumber;
 	
@@ -47,7 +47,7 @@ public class AuthenticationUser extends User implements Serializable {
 	private String email;
 	
 	@Column(name = "RoleID")
-	private String roleID;
+	private int roleID;
 	
 	@OneToMany(mappedBy = "account")
 	Set<Posts> Posts;
@@ -82,6 +82,11 @@ public class AuthenticationUser extends User implements Serializable {
 
 	public int getAccountNumber() {
 		return accountNumber;
+	}
+	
+
+	public void setRoleID(int roleID) {
+		this.roleID = roleID;
 	}
 
 	public Roles getRole() {

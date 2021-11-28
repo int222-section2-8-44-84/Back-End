@@ -28,8 +28,8 @@ public class AccountsRestController {
 	@Autowired
 	private AccountsRepository accountRepo;
 	
-	@Autowired
-	private RolesRepository roleRepo;
+//	@Autowired
+//	private RolesRepository roleRepo;
 	
 	@GetMapping("/showAllAccounts")
 	public List<AuthenticationUser> showAllAccount(){
@@ -43,27 +43,30 @@ public class AccountsRestController {
 	
 	
 	@PostMapping(value = "/register")
-	public boolean register(@RequestParam("userID") String userID,@RequestParam("password") String password,@RequestParam("email") String email) {
+	public String register(@RequestParam("userID") String userID,@RequestParam("password") String password,@RequestParam("email") String email) {
 		String encodedPassword = passwordEncoder.encode(password);
-		if(checkUserID(userID)) {
-			if(checkEmail(email)) {
+		if(!checkUserID(userID)) {
+			System.out.println("Pass checkUserID");
+			if(!checkEmail(email)) {
+				System.out.println("Pass checkEmail");
 				AuthenticationUser newAccount = new AuthenticationUser();
-				Roles userRole = roleRepo.getById(2);
+				//Roles userRole = roleRepo.getById(2);
 				newAccount.setUserID(userID);
 				newAccount.setPassword(encodedPassword);
 				newAccount.setEmail(email);
-				newAccount.setRole(userRole);
+				//newAccount.setRole(userRole);
+				newAccount.setRoleID(2);
 				accountRepo.save(newAccount);
 				System.out.println("Register Complete.");
-				return true;
+				return "Register Complete.";
 			} else {
 				System.out.println("This email has already exit.");
-				return false;
+				return "This email has already exit.";
 			}
 			
 		} else {
 			System.out.println("This userID has already exit.");
-			return false;
+			return "This userID has already exit.";
 		}
 	}
 	
@@ -73,9 +76,10 @@ public class AccountsRestController {
 		return accountRepo.findByuserID(username).get();
 	}
 	
-	public boolean checkUserID(String userID) {
+	@GetMapping(value = "/checkUserID/{userID}")
+	public boolean checkUserID(@PathVariable("userID") String userID) {
 		try {
-			if(accountRepo.findByuserID(userID).get().getUsername().equalsIgnoreCase(userID)) {
+			if(accountRepo.findByuserID(userID).get().getUsername().equals(userID)) {
 				return false;
 			}else {
 				return true;
@@ -87,7 +91,7 @@ public class AccountsRestController {
 	
 	public boolean checkEmail(String email) {
 		try {
-			if(accountRepo.findByemail(email).get().getEmail().equalsIgnoreCase(email)) {
+			if(accountRepo.findByemail(email).get().getEmail().equals(email)) {
 				return false;
 			}else {
 				return true;

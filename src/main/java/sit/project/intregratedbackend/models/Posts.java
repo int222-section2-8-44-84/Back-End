@@ -48,8 +48,8 @@ public class Posts {
 	@Column(name = "ImageName")
 	private String imageName;
 
-	@Column(name = "UserNumber")
-	private int userNumber;
+	@Column(name = "AccountNumber")
+	private int accountNumber;
 
 	@Column(name = "CategoryID")
 	private int categoryId;
@@ -58,7 +58,7 @@ public class Posts {
 	Set<Posts_has_Tags> postTags;
 
 	@ManyToOne
-	@JoinColumn(name = "UserNumber", insertable = false, updatable = false)
+	@JoinColumn(name = "AccountNumber", insertable = false, updatable = false)
 	AuthenticationUser account;
 
 	@ManyToOne
@@ -138,11 +138,11 @@ public class Posts {
 	}
 
 	public int getUserNumber() {
-		return userNumber;
+		return accountNumber;
 	}
 
-	public void setUserNumber(int userNumber) {
-		this.userNumber = userNumber;
+	public void setUserNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 	public int getCategoryId() {
@@ -178,7 +178,7 @@ public class Posts {
 		this.setReviewRate(post.reviewRate);
 		this.setPostTime(post.postTime);
 		this.setImageName(post.imageName);
-		this.setUserNumber(post.userNumber);
+		this.setUserNumber(post.accountNumber);
 		this.setCategoryId(post.categoryId);
 	}
 
