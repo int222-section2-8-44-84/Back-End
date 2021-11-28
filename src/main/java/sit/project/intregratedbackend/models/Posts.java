@@ -47,6 +47,9 @@ public class Posts {
 
 	@Column(name = "ImageName")
 	private String imageName;
+	
+	@Column(name = "PosterName")
+	private String posterName;
 
 	@Column(name = "AccountNumber")
 	private int accountNumber;
@@ -56,6 +59,9 @@ public class Posts {
 
 	@OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts_has_Tags> postTags;
+	
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	Set<FeelToPost> feelToPost;
 
 	@ManyToOne
 	@JoinColumn(name = "AccountNumber", insertable = false, updatable = false)
@@ -137,11 +143,11 @@ public class Posts {
 		this.imageName = imageName;
 	}
 
-	public int getUserNumber() {
+	public int getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setUserNumber(int accountNumber) {
+	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
@@ -169,6 +175,14 @@ public class Posts {
 		return categories;
 	}
 
+	public String getPosterName() {
+		return posterName;
+	}
+
+	public void setPosterName(String posterName) {
+		this.posterName = posterName;
+	}
+
 	public void setAll(Posts post) {
 		this.setPostTitle(post.postTitle);
 		this.setFood(post.food);
@@ -178,7 +192,8 @@ public class Posts {
 		this.setReviewRate(post.reviewRate);
 		this.setPostTime(post.postTime);
 		this.setImageName(post.imageName);
-		this.setUserNumber(post.accountNumber);
+		this.setPosterName(post.posterName);
+		this.setAccountNumber(post.accountNumber);
 		this.setCategoryId(post.categoryId);
 	}
 

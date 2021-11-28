@@ -1,27 +1,24 @@
 package sit.project.intregratedbackend.models;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+@Table(name = "FeelToPost") 
+@Entity
 public class FeelToPost {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
-	@Column(name = "LikePostNember")
+	@Column(name = "LikePostNumber")
 	private int likePostNember;
-
-	@Column(name = "PostTitle")
-	private String postTitle;
 
 	@Column(name = "Feel")
 	private String feel;
@@ -30,16 +27,53 @@ public class FeelToPost {
 	private int accountNumber;
 
 	@Column(name = "PostNumber")
-	private float postNumber;
+	private int postNumber;
 
-//	@OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, orphanRemoval = true)
-//	Set<Posts_has_Tags> postTags;
+	public String getFeel() {
+		return feel;
+	}
+
+	public void setFeel(String feel) {
+		this.feel = feel;
+	}
+
+	public FeelToPost() {
+		
+	}
+	
+	public FeelToPost(int accountNumber, int postNumber) {
+//		super();
+//		this.feel = feel;
+		this.accountNumber = accountNumber;
+		this.postNumber = postNumber;
+	}
+
+	public int getLikePostNember() {
+		return likePostNember;
+	}
+
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+
+	public int getPostNumber() {
+		return postNumber;
+	}
+
+//	public AuthenticationUser getAccounts() {
+//		return accounts;
+//	}
 //
-//	@ManyToOne
-//	@JoinColumn(name = "AccountNumber", insertable = false, updatable = false)
-//	AuthenticationUser account;
-//
-//	@ManyToOne
-//	@JoinColumn(name = "CategoryID", insertable = false, updatable = false)
-//	Categories categories;
+//	public AuthenticationUser getPost() {
+//		return post;
+//	}
+
+	@ManyToOne
+	@JoinColumn(name = "AccountNumber", insertable = false, updatable = false)
+	AuthenticationUser accounts;
+	
+	@ManyToOne
+	@JoinColumn(name = "PostNumber", insertable = false, updatable = false)
+	AuthenticationUser post;
+	
 }
