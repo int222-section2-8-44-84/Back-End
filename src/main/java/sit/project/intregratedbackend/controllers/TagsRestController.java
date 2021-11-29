@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sit.project.intregratedbackend.models.Tags;
 import sit.project.intregratedbackend.repositories.TagsRepository;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class TagsRestController {
 	@Autowired

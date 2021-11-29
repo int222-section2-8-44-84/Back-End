@@ -1,6 +1,7 @@
 package sit.project.intregratedbackend.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -36,6 +37,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
+    
+    @Value("#{'${integrated.origin.method}'.split(',')}")
+    private String[] methodList;
+    @Value("#{'${integrated.origin.host}'.split(',')}")
+    private String[] hostList;
+    @Value("#{'${integrated.origin.header}'.split(',')}")
+    private String[] headerList;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -59,7 +67,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		// We don't need CSRF for this example
-		httpSecurity.csrf().disable()
+		httpSecurity.cors(
+                config -> {
+                    CorsConfiguration cors = new CorsConfiguration();
+                    cors.setAllowCredentials(true);
+                    cors.setAllowedOrigins(Arrays.asList(hostList));
+                    cors.setAllowedMethods(Arrays.asList(methodList));
+                    cors.setAllowedHeaders(Arrays.asList(headerList));
+
+                    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                    source.registerCorsConfiguration("/**", cors);
+
+                    config.configurationSource(source);
+                }
+                )
+		.csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers("/authenticate","/posts","/posts/{postNumber}","/files/{filename:.+}","/register").permitAll().
 				// all other requests need to be authenticated
