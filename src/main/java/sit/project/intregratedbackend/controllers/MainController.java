@@ -21,9 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import sit.project.intregratedbackend.models.FeelToPost;
 import sit.project.intregratedbackend.models.Posts;
 import sit.project.intregratedbackend.models.Posts_has_Tags;
 import sit.project.intregratedbackend.models.Tags;
+import sit.project.intregratedbackend.repositories.FeelToPostRepository;
 import sit.project.intregratedbackend.repositories.PostsRepository;
 import sit.project.intregratedbackend.repositories.Posts_has_TagsRepository;
 import sit.project.intregratedbackend.uploadfiles.StorageFileNotFoundException;
@@ -36,7 +38,8 @@ public class MainController {
     PostsRepository postsJpaRepository;
     @Autowired
     Posts_has_TagsRepository posts_has_TagsJpaRepository;
-    
+    @Autowired
+    FeelToPostRepository feelToPostJpaRepository;
     final StorageService storageService;
     
     @Autowired
@@ -67,6 +70,7 @@ public class MainController {
     	Set <Posts_has_Tags> postTags = post.getPostTags();
     	posts_has_TagsJpaRepository.deleteAll(postTags);
     	storageService.delete(post.getImageName());
+    	deleteFeels(postNumber);
     	postsJpaRepository.deleteById(postNumber);
        return "Delete Post Number: "+postNumber+" complete." ;
     }
@@ -102,6 +106,12 @@ public class MainController {
     	storageService.store(file);
     	
         return "Update Post Number "+postNumber+" complete.";
+    }
+    
+    @DeleteMapping("/deleteFeel/{postNumber}")
+    public void deleteFeels(@PathVariable int postNumber) throws IOException {
+    	List<FeelToPost> allFeelOfThisPost = feelToPostJpaRepository.findAllBypostNumber(postNumber);
+    	feelToPostJpaRepository.deleteAll(allFeelOfThisPost);
     }
     
     private boolean deleteTagsByPostNumber(int postNumber) {

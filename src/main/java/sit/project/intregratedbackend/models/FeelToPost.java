@@ -11,8 +11,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Table(name = "FeelToPost") 
 @Entity
+@Table(name = "FeelToPost") 
 public class FeelToPost {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -68,12 +68,12 @@ public class FeelToPost {
 //		return post;
 //	}
 
-	@ManyToOne
-	@JoinColumn(name = "AccountNumber", insertable = false, updatable = false)
-	AuthenticationUser accounts;
-	
-	@ManyToOne
-	@JoinColumn(name = "PostNumber", insertable = false, updatable = false)
-	AuthenticationUser post;
+//	@ManyToOne
+//	@JoinColumn(name = "AccountNumber", insertable = false, updatable = false)
+//	AuthenticationUser accounts;
+//	
+//	@ManyToOne
+//	@JoinColumn(name = "PostNumber", insertable = false, updatable = false)
+//	AuthenticationUser post;
 	
 }

@@ -6,5 +6,8 @@ import sit.project.intregratedbackend.models.FeelToPost;
 
 @Repository
 public interface FeelToPostRepository  extends JpaRepository<FeelToPost, Integer>{
+	List<FeelToPost> findAllBypostNumber(int postNumber);
 	List<FeelToPost> findAllByaccountNumber(int accountNumber);
+	
+	void deleteBypostNumber(int postNumber);
 }

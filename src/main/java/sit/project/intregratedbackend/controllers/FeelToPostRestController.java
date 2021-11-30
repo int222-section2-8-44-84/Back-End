@@ -1,6 +1,8 @@
 package sit.project.intregratedbackend.controllers;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,22 @@ public class FeelToPostRestController {
 	@GetMapping("/showFeelToPost/{accountNumber}")
 	public List<FeelToPost> showAllFeelToPost(@PathVariable("accountNumber") int accountNumber){
 		return feelRepo.findAllByaccountNumber(accountNumber);
+	}
+	
+	@GetMapping("/findFeelOfPost/{postNumber}/{accountNumber}")
+	public Optional<FeelToPost> findFeelByPostNumber(@PathVariable("postNumber") int postNumber, @PathVariable("accountNumber") int accountNumber){
+		List<FeelToPost> feelByAccount = feelRepo.findAllByaccountNumber(accountNumber);
+		if(feelByAccount.size()!= 0) {
+			for (int i = 0; i < feelByAccount.size(); i++) {
+				if(feelByAccount.get(i).getPostNumber() == postNumber) {
+					return feelRepo.findById(feelByAccount.get(i).getLikePostNember());
+				} 
+			}
+		} else {
+			return null;
+		}
+		return null;
+		
 	}
 	
 	@PutMapping("/feel")

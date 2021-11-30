@@ -52,8 +52,8 @@ public class AuthenticationUser extends User implements Serializable {
 	@OneToMany(mappedBy = "account")
 	Set<Posts> Posts;
 	
-	@OneToMany(mappedBy = "accounts")
-	Set<FeelToPost> FeelToPosts;
+//	@OneToMany(mappedBy = "accounts")
+//	Set<FeelToPost> FeelToPosts;
 	
 	@ManyToOne
 	@JoinColumn(name = "RoleID", insertable = false, updatable = false)

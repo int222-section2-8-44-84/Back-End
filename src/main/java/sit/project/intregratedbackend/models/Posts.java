@@ -60,8 +60,8 @@ public class Posts {
 	@OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts_has_Tags> postTags;
 	
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-	Set<FeelToPost> feelToPost;
+//	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+//	Set<FeelToPost> feelToPost;
 
 	@ManyToOne
 	@JoinColumn(name = "AccountNumber", insertable = false, updatable = false)
