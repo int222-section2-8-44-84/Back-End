@@ -71,6 +71,22 @@ public class AccountsRestController {
 		}
 	}
 	
+	@PutMapping("/editAccount/{accountNumber}")
+	public String editAccount(@PathVariable("accountNumber") int accountNumber,@RequestParam("userID") String userID,@RequestParam("email") String email) {
+		try {
+		AuthenticationUser editingAccount = accountRepo.findById(accountNumber).get();
+		if(editingAccount!=null) {
+		editingAccount.setUserID(userID);
+		editingAccount.setEmail(email);
+		return "Update account success.";
+		} else {
+			return "Invalid this account.";
+		}
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+	
 	@GetMapping("/me")
 	public AuthenticationUser getMe() {
 		String username = ServiceUtil.getUsername();
@@ -122,6 +138,4 @@ public class AccountsRestController {
 			return "Can't delete Account Number "+accountNumber+"\n" + e.getMessage();
 		}
 	}
-	
-	
 }

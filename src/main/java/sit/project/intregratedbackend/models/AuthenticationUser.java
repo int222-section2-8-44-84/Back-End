@@ -33,7 +33,7 @@ public class AuthenticationUser extends User implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "AccountNumber")
 	private int accountNumber;
 	
@@ -41,7 +41,7 @@ public class AuthenticationUser extends User implements Serializable {
 	private String userID;
 	
 	@Column(name = "Password")
-	private String password;
+	private String pass;
 	
 	@Column(name = "Email")
 	private String email;
@@ -68,11 +68,11 @@ public class AuthenticationUser extends User implements Serializable {
 	}
 
 	public String getPassword() {
-		return password;
+		return pass;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.pass = password;
 	}
 
 	public String getEmail() {

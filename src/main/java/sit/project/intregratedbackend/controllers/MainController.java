@@ -3,6 +3,7 @@ package sit.project.intregratedbackend.controllers;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,14 +82,15 @@ public class MainController {
     	//find Old Post By Number
     	Posts post = postsJpaRepository.findById(postNumber).orElse(null);
     	//find Old PostTags
-    	Set <Posts_has_Tags> postTags = post.getPostTags();
+    		//Set <Posts_has_Tags> postTags = post.getPostTags();
     	//Delete Old Image
     	storageService.delete(post.getImageName());
     	//Set Post Data
     	post.setAll(editDataPost);
     	postsJpaRepository.save(post);
     	//Delete Old Tags
-    	posts_has_TagsJpaRepository.deleteAll(postTags);
+    	deleteTagsByPostNumber(postNumber);
+    		//posts_has_TagsJpaRepository.deleteAll(postTags);
     	//Add New Tags
     	for (Tags tag : newTagsData) { 
     		Posts_has_Tags postTag = new Posts_has_Tags(); 
@@ -100,6 +102,17 @@ public class MainController {
     	storageService.store(file);
     	
         return "Update Post Number "+postNumber+" complete.";
+    }
+    
+    private boolean deleteTagsByPostNumber(int postNumber) {
+		Posts post = postsJpaRepository.findById(postNumber).orElse(null);
+		if(post != null) {
+			List<Posts_has_Tags> postTags = posts_has_TagsJpaRepository.findAllBypostsNumber(postNumber);
+			posts_has_TagsJpaRepository.deleteAll(postTags);
+			return true;
+		} else {
+    	return false;
+		}
     }
     
     

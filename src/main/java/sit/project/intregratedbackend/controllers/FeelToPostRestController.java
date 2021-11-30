@@ -35,6 +35,7 @@ public class FeelToPostRestController {
 	
 	@PutMapping("/feel")
 	public String manageFeel(@RequestParam("accountNumber") int accountNumber, @RequestParam("postNumber") int postNumber, @RequestParam("feel") String feel) {
+		System.out.println("Pass manageFeel"+accountNumber);
 		int foundLikePostNember = checkFeelHistory(accountNumber,postNumber,feel);
 		if(foundLikePostNember==-1) {
 			return addFeel(accountNumber, postNumber, feel);
@@ -44,9 +45,12 @@ public class FeelToPostRestController {
 	}
 	
 	public int checkFeelHistory(@RequestParam("accountNumber") int accountNumber, @RequestParam("postNumber") int postNumber, @RequestParam("feel") String feel) {
+		System.out.println("Pass checkFeelHistory"+accountNumber);
 		List<FeelToPost> feltPost = feelRepo.findAllByaccountNumber(accountNumber);
+		System.out.println(feltPost);
 		for (int i = 0; i < feltPost.size(); i++) {
 			if(feltPost.get(i).getPostNumber()==postNumber) {
+				System.out.println(feltPost.get(i).getLikePostNember());
 				return feltPost.get(i).getLikePostNember();
 			}
 		}
@@ -54,6 +58,7 @@ public class FeelToPostRestController {
 	}
 	
 	public String addFeel(int accountNumber, int postNumber, String feel) {
+		System.out.println("Pass addFeel"+accountNumber);
 		FeelToPost feelToPost = new FeelToPost(accountNumber,postNumber);
 		feelToPost.setFeel(feel);
 		feelRepo.save(feelToPost);
@@ -61,6 +66,7 @@ public class FeelToPostRestController {
 	}
 	
 	public String changeFeel(int likePostNember, String feel) {
+		System.out.println("Pass changeFeel");
 		FeelToPost feelToPost = feelRepo.findById(likePostNember).orElse(null);
 		feelToPost.setFeel(feel);
 		feelRepo.save(feelToPost);
