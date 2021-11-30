@@ -108,7 +108,6 @@ public class MainController {
         return "Update Post Number "+postNumber+" complete.";
     }
     
-    @DeleteMapping("/deleteFeel/{postNumber}")
     public void deleteFeels(@PathVariable int postNumber) throws IOException {
     	List<FeelToPost> allFeelOfThisPost = feelToPostJpaRepository.findAllBypostNumber(postNumber);
     	feelToPostJpaRepository.deleteAll(allFeelOfThisPost);

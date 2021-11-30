@@ -1,5 +1,6 @@
 package sit.project.intregratedbackend.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sit.project.intregratedbackend.models.AuthenticationUser;
+import sit.project.intregratedbackend.models.FeelToPost;
 import sit.project.intregratedbackend.models.Posts;
 import sit.project.intregratedbackend.models.Roles;
 import sit.project.intregratedbackend.repositories.AccountsRepository;
+import sit.project.intregratedbackend.repositories.FeelToPostRepository;
+import sit.project.intregratedbackend.repositories.PostsRepository;
 import sit.project.intregratedbackend.repositories.RolesRepository;
 import sit.project.intregratedbackend.services.ServiceUtil;
 
@@ -32,6 +36,12 @@ public class AccountsRestController {
 	
 //	@Autowired
 //	private RolesRepository roleRepo;
+	
+	@Autowired
+    FeelToPostRepository feelToPostJpaRepository;
+	
+	@Autowired
+    PostsRepository postsJpaRepository;
 	
 	@GetMapping("/showAllAccounts")
 	public List<AuthenticationUser> showAllAccount(){
@@ -132,10 +142,23 @@ public class AccountsRestController {
 	@DeleteMapping("/deleteAccount/{accountNumber}")
 	public String deleteAccount(@PathVariable("accountNumber") int accountNumber) throws Exception {
 		try {
+			deleteAccountInPost(accountNumber);
 			accountRepo.deleteById(accountNumber);
 			return "Delete Account Number "+ accountNumber+" Complete.";
 		} catch (Exception e) {
 			return "Can't delete Account Number "+accountNumber+"\n" + e.getMessage();
 		}
 	}
+	
+	public void deleteAccountInPost(int accountNumber) throws IOException {
+    	List<Posts> allFeelOfThisPost = postsJpaRepository.findAllByaccountNumber(accountNumber);
+    	for (int i = 0; i < allFeelOfThisPost.size(); i++) {
+			allFeelOfThisPost.get(i).setAccountNumber(0);
+		}
+    }
+	
+	public void deleteFeels(int accountNumber) throws IOException {
+    	List<FeelToPost> allFeelOfThisPost = feelToPostJpaRepository.findAllByaccountNumber(accountNumber);
+    	feelToPostJpaRepository.deleteAll(allFeelOfThisPost);
+    }
 }

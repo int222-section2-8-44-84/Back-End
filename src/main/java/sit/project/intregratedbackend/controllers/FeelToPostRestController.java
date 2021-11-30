@@ -21,73 +21,77 @@ public class FeelToPostRestController {
 
 //	@Autowired
 //	private AccountsRepository accountRepo;
-	
+
 	@Autowired
 	private FeelToPostRepository feelRepo;
-	
+
 	@GetMapping("/showAllFeelToPost")
-	public List<FeelToPost> showAllFeelToPost(){
+	public List<FeelToPost> showAllFeelToPost() {
 		return feelRepo.findAll();
 	}
-	
+
 	@GetMapping("/showFeelToPost/{accountNumber}")
-	public List<FeelToPost> showAllFeelToPost(@PathVariable("accountNumber") int accountNumber){
+	public List<FeelToPost> showAllFeelToPost(@PathVariable("accountNumber") int accountNumber) {
 		return feelRepo.findAllByaccountNumber(accountNumber);
 	}
-	
+
 	@GetMapping("/findFeelOfPost/{postNumber}/{accountNumber}")
-	public Optional<FeelToPost> findFeelByPostNumber(@PathVariable("postNumber") int postNumber, @PathVariable("accountNumber") int accountNumber){
+	public Optional<FeelToPost> findFeelByPostNumber(@PathVariable("postNumber") int postNumber,
+			@PathVariable("accountNumber") int accountNumber) {
 		List<FeelToPost> feelByAccount = feelRepo.findAllByaccountNumber(accountNumber);
-		if(feelByAccount.size()!= 0) {
+		if (feelByAccount.size() != 0) {
 			for (int i = 0; i < feelByAccount.size(); i++) {
-				if(feelByAccount.get(i).getPostNumber() == postNumber) {
+				if (feelByAccount.get(i).getPostNumber() == postNumber) {
 					return feelRepo.findById(feelByAccount.get(i).getLikePostNember());
-				} 
+				}
 			}
 		} else {
 			return null;
 		}
 		return null;
-		
+
 	}
-	
+
 	@PutMapping("/feel")
-	public String manageFeel(@RequestParam("accountNumber") int accountNumber, @RequestParam("postNumber") int postNumber, @RequestParam("feel") String feel) {
-		System.out.println("Pass manageFeel"+accountNumber);
-		int foundLikePostNember = checkFeelHistory(accountNumber,postNumber,feel);
-		if(foundLikePostNember==-1) {
+	public String manageFeel(@RequestParam("accountNumber") int accountNumber,
+			@RequestParam("postNumber") int postNumber, @RequestParam("feel") String feel) {
+
+		int foundLikePostNember = checkFeelHistory(accountNumber, postNumber, feel);
+		if (foundLikePostNember == -1) {
 			return addFeel(accountNumber, postNumber, feel);
 		} else {
-			return changeFeel(foundLikePostNember,feel);
+			return changeFeel(foundLikePostNember, feel);
 		}
 	}
-	
-	public int checkFeelHistory(@RequestParam("accountNumber") int accountNumber, @RequestParam("postNumber") int postNumber, @RequestParam("feel") String feel) {
-		System.out.println("Pass checkFeelHistory"+accountNumber);
+
+	public int checkFeelHistory(@RequestParam("accountNumber") int accountNumber,
+			@RequestParam("postNumber") int postNumber, @RequestParam("feel") String feel) {
+
 		List<FeelToPost> feltPost = feelRepo.findAllByaccountNumber(accountNumber);
-		System.out.println(feltPost);
+
 		for (int i = 0; i < feltPost.size(); i++) {
-			if(feltPost.get(i).getPostNumber()==postNumber) {
+			if (feltPost.get(i).getPostNumber() == postNumber) {
 				System.out.println(feltPost.get(i).getLikePostNember());
 				return feltPost.get(i).getLikePostNember();
 			}
 		}
 		return -1;
 	}
-	
+
 	public String addFeel(int accountNumber, int postNumber, String feel) {
-		System.out.println("Pass addFeel"+accountNumber);
-		FeelToPost feelToPost = new FeelToPost(accountNumber,postNumber);
+
+		FeelToPost feelToPost = new FeelToPost(accountNumber, postNumber);
 		feelToPost.setFeel(feel);
 		feelRepo.save(feelToPost);
-		return "Add: Account Number " + accountNumber + " "+ feel + " Post Number " + postNumber;
+		return "Add: Account Number " + accountNumber + " " + feel + " Post Number " + postNumber;
 	}
-	
+
 	public String changeFeel(int likePostNember, String feel) {
-		System.out.println("Pass changeFeel");
+
 		FeelToPost feelToPost = feelRepo.findById(likePostNember).orElse(null);
 		feelToPost.setFeel(feel);
 		feelRepo.save(feelToPost);
-		return "Update: Account Number " + feelToPost.getAccountNumber() + " "+ feel + " Post Number " + feelToPost.getPostNumber();
+		return "Update: Account Number " + feelToPost.getAccountNumber() + " " + feel + " Post Number "
+				+ feelToPost.getPostNumber();
 	}
 }
