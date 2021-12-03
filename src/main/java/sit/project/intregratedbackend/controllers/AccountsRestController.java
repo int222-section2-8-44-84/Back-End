@@ -103,7 +103,7 @@ public class AccountsRestController {
 		return accountRepo.findByuserID(username).get();
 	}
 	
-	@GetMapping(value = "/checkUserID/{userID}")
+	//@GetMapping(value = "/checkUserID/{userID}")
 	public boolean checkUserID(@PathVariable("userID") String userID) {
 		try {
 			if(accountRepo.findByuserID(userID).get().getUserID().equals(userID)) {

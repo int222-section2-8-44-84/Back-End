@@ -29,8 +29,13 @@ public class PostsRestController {
 	}
 	
     @GetMapping("/posts/{postNumber}")
-    public Posts showPosts(@PathVariable String postNumber) {
-        return postsRepo.findById(Integer.parseInt(postNumber)).orElse(null);
+    public Posts showPosts(@PathVariable int postNumber) {
+        return postsRepo.findById(postNumber).orElse(null);
+    }
+    
+    @GetMapping("/postsByAccount/{accountNumber}")
+    public List<Posts> showPostsByAccount(@PathVariable int accountNumber) {
+        return postsRepo.findAllByaccountNumber(accountNumber);
     }
     
 //    //Delete
