@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.swing.text.html.Option;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,48 +20,54 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "Posts")
 public class Posts {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO,generator="native")
-	@GenericGenerator(name = "native",strategy = "native")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
 	@Column(name = "PostNumber")
 	private int postNumber;
-	
+
 	@Column(name = "PostTitle")
 	private String postTitle;
-	
+
 	@Column(name = "Food")
 	private String food;
-	
+
 	@Column(name = "Restaurant")
 	private String restaurant;
-	
+
 	@Column(name = "FoodPrice")
 	private float foodPrice;
-	
+
 	@Column(name = "Description")
 	private String description;
-	
+
 	@Column(name = "ReviewRate")
 	private int reviewRate;
-	
+
 	@Column(name = "PostTime")
 	private java.sql.Timestamp postTime;
-	
+
 	@Column(name = "ImageName")
 	private String imageName;
 	
-	@Column(name = "UserNumber")
-	private int userNumber;
-	
+	@Column(name = "PosterName")
+	private String posterName;
+
+	@Column(name = "AccountNumber")
+	private int accountNumber;
+
 	@Column(name = "CategoryID")
 	private int categoryId;
-	
+
 	@OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<Posts_has_Tags> postTags;
 	
+//	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+//	Set<FeelToPost> feelToPost;
+
 	@ManyToOne
-    @JoinColumn(name = "UserNumber", insertable = false, updatable = false)
-    Accounts account;
-	
+	@JoinColumn(name = "AccountNumber", insertable = false, updatable = false)
+	AuthenticationUser account;
+
 	@ManyToOne
 	@JoinColumn(name = "CategoryID", insertable = false, updatable = false)
 	Categories categories;
@@ -137,12 +144,12 @@ public class Posts {
 		this.imageName = imageName;
 	}
 
-	public int getUserNumber() {
-		return userNumber;
+	public int getAccountNumber() {
+		return accountNumber;
 	}
 
-	public void setUserNumber(int userNumber) {
-		this.userNumber = userNumber;
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 	public int getCategoryId() {
@@ -152,8 +159,11 @@ public class Posts {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
-	
-	
+
+	public void setCategories(Categories categories) {
+		this.categories = categories;
+	}
+
 	public Set<Posts_has_Tags> getPostTags() {
 		return postTags;
 	}
@@ -166,6 +176,14 @@ public class Posts {
 		return categories;
 	}
 
+	public String getPosterName() {
+		return posterName;
+	}
+
+	public void setPosterName(String posterName) {
+		this.posterName = posterName;
+	}
+
 	public void setAll(Posts post) {
 		this.setPostTitle(post.postTitle);
 		this.setFood(post.food);
@@ -175,9 +193,9 @@ public class Posts {
 		this.setReviewRate(post.reviewRate);
 		this.setPostTime(post.postTime);
 		this.setImageName(post.imageName);
-		this.setUserNumber(post.userNumber);
+		this.setPosterName(post.posterName);
+		this.setAccountNumber(post.accountNumber);
 		this.setCategoryId(post.categoryId);
 	}
-
 
 }
