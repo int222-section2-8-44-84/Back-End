@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,12 +56,12 @@ public class AccountsRestController {
 	
 	
 	@PostMapping(value = "/register")
-	public String register(@RequestParam("userID") String userID,@RequestParam("password") String password,@RequestParam("email") String email) {
+	public ResponseEntity<String> register(@RequestParam("userID") String userID,@RequestParam("password") String password,@RequestParam("email") String email) {
 		String encodedPassword = passwordEncoder.encode(password);
 		if(!checkUserID(userID)) {
-			System.out.println("Pass checkUserID");
+			//System.out.println("Pass checkUserID");
 			if(!checkEmail(email)) {
-				System.out.println("Pass checkEmail");
+				//System.out.println("Pass checkEmail");
 				AuthenticationUser newAccount = new AuthenticationUser();
 				//Roles userRole = roleRepo.getById(2);
 				newAccount.setUserID(userID);
@@ -70,14 +71,14 @@ public class AccountsRestController {
 				newAccount.setRoleID(2);
 				accountRepo.save(newAccount);
 				System.out.println("Register Complete.");
-				return "Register Complete.";
+				return ResponseEntity.ok("Register Complete.");
 			} else {
 				System.out.println("This email has already exit.");
-				return "This email has already exit.";
+				return ResponseEntity.status(901).build();
 			}
 		} else {
 			System.out.println("This userID has already exit.");
-			return "This userID has already exit.";
+			return ResponseEntity.status(900).build();
 		}
 	}
 	
@@ -88,6 +89,7 @@ public class AccountsRestController {
 		if(editingAccount!=null) {
 		editingAccount.setUserID(userID);
 		editingAccount.setEmail(email);
+		accountRepo.save(editingAccount);
 		return "Update account success.";
 		} else {
 			return "Invalid this account.";

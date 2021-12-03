@@ -35,10 +35,15 @@ public class JwtAuthenticationController {
 	
 	@PostMapping(value = "/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new JwtResponse(token));
+		try {
+			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+			final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			return ResponseEntity.ok(new JwtResponse(token));
+		}catch (Exception e) {
+			return (ResponseEntity<?>) ResponseEntity.status(401);
+		}
+		
 	}
 
 	private void authenticate(String username, String password) throws Exception {
