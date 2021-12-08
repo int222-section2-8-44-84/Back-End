@@ -144,6 +144,7 @@ public class AccountsRestController {
 	@DeleteMapping("/deleteAccount/{accountNumber}")
 	public String deleteAccount(@PathVariable("accountNumber") int accountNumber) throws Exception {
 		try {
+			deleteFeels(accountNumber);
 			deleteAccountInPost(accountNumber);
 			accountRepo.deleteById(accountNumber);
 			return "Delete Account Number "+ accountNumber+" Complete.";
